@@ -11,7 +11,8 @@ export const deploymentMapper = ({ deployments, environments }: any): any => {
   startDate.setHours(0, 0, 0, 0);
   startDate.setDate(startDate.getDate() - 14);
 
-  const deploymentDict: Record<string, IDeployment[]> = {};
+  const successfulDeploymentDict: Record<string, IDeployment[]> = {};
+  const failedDeploymentDict: Record<string, IDeployment[]> = {};
 
   const environmentMap = new Map<string, string>();
 
@@ -32,27 +33,52 @@ export const deploymentMapper = ({ deployments, environments }: any): any => {
         return;
       }
 
+      const deploymentStatus = deployment.state.status.name;
       const deploymentEnv = environmentMap.get(deployment.environment.uuid);
 
       if (deploymentEnv) {
-        if (deploymentDict[deploymentEnv]) {
-          const deploymentData = deploymentDict[deploymentEnv];
+        if (deploymentStatus === DeploymentStatus.SUCCESSFUL) {
+          if (successfulDeploymentDict[deploymentEnv]) {
+            const deploymentData = successfulDeploymentDict[deploymentEnv];
 
-          deploymentData.push({
-            startedOn: format(
-              new Date(deployment.state.started_on),
-              'dd/MM/yyyy'
-            ),
-          });
-        } else {
-          deploymentDict[deploymentEnv] = [
-            {
+            deploymentData.push({
               startedOn: format(
                 new Date(deployment.state.started_on),
                 'dd/MM/yyyy'
               ),
-            },
-          ];
+            });
+          } else {
+            successfulDeploymentDict[deploymentEnv] = [
+              {
+                startedOn: format(
+                  new Date(deployment.state.started_on),
+                  'dd/MM/yyyy'
+                ),
+              },
+            ];
+          }
+        }
+
+        if (deploymentStatus === DeploymentStatus.FAILED) {
+          if (failedDeploymentDict[deploymentEnv]) {
+            const deploymentData = failedDeploymentDict[deploymentEnv];
+
+            deploymentData.push({
+              startedOn: format(
+                new Date(deployment.state.started_on),
+                'dd/MM/yyyy'
+              ),
+            });
+          } else {
+            failedDeploymentDict[deploymentEnv] = [
+              {
+                startedOn: format(
+                  new Date(deployment.state.started_on),
+                  'dd/MM/yyyy'
+                ),
+              },
+            ];
+          }
         }
       }
     });
@@ -60,6 +86,7 @@ export const deploymentMapper = ({ deployments, environments }: any): any => {
   return {
     startDate: new Date(startDate),
     endDate: new Date(),
-    deployments: deploymentDict,
+    successfulDeployments: successfulDeploymentDict,
+    failedDeployments: failedDeploymentDict,
   };
 };

@@ -16,7 +16,8 @@ export default function DeploymentMetric({
   workspaceSlug,
   repositorySlug,
 }: IProps) {
-  const [metrics, setMetrics] = useState({});
+  const [successfulDeployments, setSuccessfulDeployments] = useState({});
+  const [failedDeployments, setFailedDeployments] = useState({});
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
 
@@ -33,14 +34,16 @@ export default function DeploymentMetric({
 
   useEffect(() => {
     const environments = envData?.values || [];
-    const { startDate, endDate, deployments } = deploymentMapper({
-      deployments: data,
-      environments,
-    });
+    const { startDate, endDate, successfulDeployments, failedDeployments } =
+      deploymentMapper({
+        deployments: data,
+        environments,
+      });
 
     setStartDate(startDate);
     setEndDate(endDate);
-    setMetrics(deployments);
+    setSuccessfulDeployments(successfulDeployments);
+    setFailedDeployments(failedDeployments);
   }, [data, envData]);
 
   if (status === 'error') {
@@ -54,13 +57,15 @@ export default function DeploymentMetric({
       {status === 'loading' ? (
         <LoadingSpinner />
       ) : (
-        Object.keys(metrics).length !== 0 && (
-          <DeploymentFrequencyChart
-            deployments={metrics}
-            startDate={startDate}
-            endDate={endDate}
-          />
-        )
+        <>
+          {Object.keys(successfulDeployments).length !== 0 && (
+            <DeploymentFrequencyChart
+              deployments={successfulDeployments}
+              startDate={startDate}
+              endDate={endDate}
+            />
+          )}
+        </>
       )}
     </>
   );

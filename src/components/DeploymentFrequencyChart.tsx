@@ -40,6 +40,11 @@ export default function DeploymentFrequencyChart({
         text: 'Deployment Frequency',
       },
     },
+    scale: {
+      ticks: {
+        precision: 0,
+      },
+    },
   };
 
   // Dates Ranges
@@ -60,7 +65,7 @@ export default function DeploymentFrequencyChart({
   useEffect(() => {
     const datasets: any = [];
 
-    Object.entries(deployments).forEach(([key, value]: any, idx: any) => {
+    Object.entries(deployments).forEach(([key, value]: any) => {
       const deploymentsDict: any = {};
 
       value.forEach((d: any) => {
@@ -87,14 +92,14 @@ export default function DeploymentFrequencyChart({
 
   return (
     <>
-      <div className='float-right'>
+      <div className="float-right">
         <EnvironmentsDropdown
           environmentList={Object.keys(deployments)}
           environment={environment}
           setEnvironment={setEnvironment}
         />
       </div>
-      <div className='w-full overflow-hidden'>
+      <div className="w-full overflow-hidden">
         <Bar options={options} data={data} height={80} />
       </div>
     </>
