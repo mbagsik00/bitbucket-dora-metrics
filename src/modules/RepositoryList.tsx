@@ -11,9 +11,7 @@ export default function RepositoryList({ repositories }: IProps) {
   if (repositories.length === 0) {
     return (
       <div className='text-center'>
-        <h2 className='text-lg text-blue-500 font-semibold'>
-          No records found.
-        </h2>
+        <h2 className='text-lg text-blue-500 font-semibold'>No records found.</h2>
       </div>
     );
   }
@@ -27,28 +25,19 @@ export default function RepositoryList({ repositories }: IProps) {
               <li key={repository.id} className='flex flex-row'>
                 <div className='select-none flex flex-1 items-center p-4'>
                   <div className='flex flex-col w-10 h-10 justify-center items-center mr-4'>
-                    <GoCode
-                      className='mx-auto object-cover h-10 w-10'
-                      color='#0052cc'
-                    />
+                    <GoCode className='mx-auto object-cover h-10 w-10' color='#0052cc' />
                   </div>
                   <div className='flex-1 pl-1 mr-16'>
                     <div className='font-medium'>{repository.name}</div>
-                    <div className='text-gray-600 text-sm'>
-                      {repository.description}
-                    </div>
+                    <div className='text-gray-600 text-sm'>{repository.description}</div>
                   </div>
                   <div className='text-gray-600 text-xs'>
-                    Last Updated:{' '}
-                    {new Date(repository.updatedOn).toLocaleString()}
+                    Last Updated: {new Date(repository.updatedOn).toLocaleString()}
                   </div>
                   <Link
-                    to={`/${repository.workspaceSlug}/repositories/${repository.slug}/pullrequests`}
+                    to={`/${repository.workspaceSlug}/repositories/${repository.slug}/dashboard`}
                   >
-                    <button
-                      title='button'
-                      className='w-24 text-right flex justify-end'
-                    >
+                    <button title='button' className='w-24 text-right flex justify-end'>
                       <FaAngleRight className='hover:text-blue-700 text-blue-500 h-7' />
                     </button>
                   </Link>

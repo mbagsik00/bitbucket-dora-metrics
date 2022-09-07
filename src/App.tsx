@@ -1,6 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
 import SignIn from './pages/SignIn';
-import PullRequests from './pages/PullRequests';
+import Dashboard from './pages/Dashboard';
 import Repositories from './pages/Repositories';
 import Workspaces from './pages/Workspaces';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
@@ -22,13 +22,10 @@ function App() {
           <Route path='/references' element={<ComingSoon />} />
           <Route path='/environments' element={<ComingSoon />} />
 
+          <Route path='/:workspaceSlug/repositories' element={<Repositories />} />
           <Route
-            path='/:workspaceSlug/repositories'
-            element={<Repositories />}
-          />
-          <Route
-            path='/:workspaceSlug/repositories/:repositorySlug/pullrequests'
-            element={<PullRequests />}
+            path='/:workspaceSlug/repositories/:repositorySlug/dashboard'
+            element={<Dashboard />}
           />
           <Route path='*' element={<PageNotFound />} />
         </Routes>

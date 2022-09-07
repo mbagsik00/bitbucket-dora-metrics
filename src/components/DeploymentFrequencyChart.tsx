@@ -5,60 +5,48 @@ import {
   BarElement,
   Title,
   Tooltip,
-  Legend,
+  Legend
 } from 'chart.js';
 import { useEffect, useState } from 'react';
 import { Bar } from 'react-chartjs-2';
 import { getDatesInRange } from '../utils/dateFormat';
 import EnvironmentsDropdown from './EnvironmentsDropdown';
 
-export default function DeploymentFrequencyChart({
-  deployments,
-  startDate,
-  endDate,
-}: any) {
+export default function DeploymentFrequencyChart({ deployments, startDate, endDate }: any) {
   const [chartData, setChartData] = useState([]);
   const [environment, setEnvironment] = useState('');
 
-  ChartJS.register(
-    CategoryScale,
-    LinearScale,
-    BarElement,
-    Title,
-    Tooltip,
-    Legend
-  );
+  ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
   const options = {
     responsive: true,
     plugins: {
       legend: {
-        position: 'top' as const,
+        position: 'top' as const
       },
       title: {
         display: true,
-        text: 'Deployment Frequency',
-      },
+        text: 'Deployment Frequency'
+      }
     },
     scale: {
       ticks: {
-        precision: 0,
-      },
-    },
+        precision: 0
+      }
+    }
   };
 
   // Dates Ranges
   const labels = getDatesInRange(startDate, endDate);
   const data: { labels: any; datasets: any } = {
     labels,
-    datasets: chartData,
+    datasets: chartData
   };
 
   useEffect(() => {
     setEnvironment(
-      Object.keys(deployments).filter((i) =>
-        ['production', 'prod'].includes(i.toLowerCase())
-      )[0] || Object.keys(deployments)[0]
+      Object.keys(deployments).filter((i) => ['production', 'prod'].includes(i.toLowerCase()))[0] ||
+        Object.keys(deployments)[0]
     );
   }, [deployments]);
 
@@ -81,7 +69,7 @@ export default function DeploymentFrequencyChart({
       datasets.push({
         label: key,
         backgroundColor: '#0052cc',
-        data: labels.map((label) => deploymentsDict[label] || 0),
+        data: labels.map((label) => deploymentsDict[label] || 0)
       });
     });
 
@@ -92,15 +80,15 @@ export default function DeploymentFrequencyChart({
 
   return (
     <>
-      <div className="float-right">
+      <div className='float-right'>
         <EnvironmentsDropdown
           environmentList={Object.keys(deployments)}
           environment={environment}
           setEnvironment={setEnvironment}
         />
       </div>
-      <div className="w-full overflow-hidden">
-        <Bar options={options} data={data} height={80} />
+      <div className='w-full overflow-hidden'>
+        <Bar options={options} data={data} />
       </div>
     </>
   );

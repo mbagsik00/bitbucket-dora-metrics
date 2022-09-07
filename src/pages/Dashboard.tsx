@@ -5,7 +5,7 @@ import LoggedInUserContainer from '../modules/LoggedInUserContainer';
 import DeploymentMetric from '../modules/DeploymentMetric';
 import PullRequestContainer from '../modules/PullRequestContainer';
 
-export default function PullRequests() {
+export default function Dashboard() {
   const { workspaceSlug, repositorySlug } = useParams();
 
   const header = (
