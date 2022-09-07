@@ -1,0 +1,77 @@
+// ===================================================================================================================================
+
+** Change lead time **
+  Coding time
+  Time spent between first commit and a pull request being opened
+
+  Review lag time
+  Time spent between a pull request being opened and the first review
+
+  Review time
+  Time spent between first review and merge
+
+  Deploying time
+  Time spent between PR merge and deploy
+
+** DORA Graphs **
+
+- Deployment Frequency
+  - Number of deployments per day
+- Failure Rate
+  - Number of fail deployments
+- Change Lead Time
+  - first commit -> Pull request opened
+  - pr open -> first approval
+  - pull request open -> deploy to dev
+  - dev -> production
+- Mean time to recover
+  - Down time -> Up time
+
+// ===================================================================================================================================
+
+Icon color - #0052cc
+Label Color - bg-blue-500
+Hover - bg-blue-700
+
+// ===================================================================================================================================
+
+** Sample deployments query **
+
+https://bitbucket.org/!api/2.0/repositories/medenterprises/med-recruit-web/deployments/
+?state.name=COMPLETED
+&state.name=IN_PROGRESS
+&sort=-state.started_on
+&pagelen=10
+&environment=%7B83dd433f-3e42-440c-8352-65448780539a%7D
+&page=1
+
+// ===================================================================================================================================
+
+** Bitbucket query **
+
+state.name="OPEN" and (state.started_on<=2022-08-30T00:17:43 and state.started_on>=2022-08-20T00:17:43)
+
+q=state%3D%22OPEN%22%20and%20(created_on%3C%3D2022-08-30T00%3A17%3A43%20and%20created_on%3E%3D2022-08-20T00%3A17%3A43)
+
+** Open pull request in the last two weeks **
+
+ const endDate = new Date();
+ const startDate = new Date();
+ startDate.setDate(startDate.getDate() - 14);
+
+ const getOpenPullRequestCount = async () => {
+   const q = encodeURIComponent(
+     `state="${
+       PullRequestState.OPEN
+     }" and (created_on>=${startDate.toISOString()} and created_on<=${endDate.toISOString()})`
+   );
+
+   const { data } = await axios.get(
+     `${BITBUCKET_URL}/repositories/${workspaceSlug}/${repositorySlug}/pullrequests?q=${q}`,
+     {
+       headers,
+     }
+   );
+
+   return data.size;
+ };
