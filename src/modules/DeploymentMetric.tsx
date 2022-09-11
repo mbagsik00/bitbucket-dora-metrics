@@ -10,10 +10,14 @@ import { deploymentMapper } from '../utils/deploymentsMapper';
 interface IProps {
   workspaceSlug: string;
   repositorySlug: string;
+  environment: {
+    name: string;
+    uuid: string;
+  };
 }
 
 // TODO: Environment based
-export default function DeploymentMetric({ workspaceSlug, repositorySlug }: IProps) {
+export default function DeploymentMetric({ workspaceSlug, repositorySlug, environment }: IProps) {
   const [successfulDeployments, setSuccessfulDeployments] = useState({});
   const [failedDeployments, setFailedDeployments] = useState({});
   const [startDate, setStartDate] = useState(new Date());
@@ -55,6 +59,7 @@ export default function DeploymentMetric({ workspaceSlug, repositorySlug }: IPro
         <div className='flex flex-wrap -mx-2 overflow-hidden'>
           <div className='h-full my-2 px-2 w-1/2 overflow-hidden lg:w-1/2 xl:w-1/2'>
             <DeploymentFrequencyChart
+              environment={environment}
               deployments={successfulDeployments}
               startDate={startDate}
               endDate={endDate}

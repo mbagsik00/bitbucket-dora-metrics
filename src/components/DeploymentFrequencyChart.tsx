@@ -10,11 +10,16 @@ import {
 import { useEffect, useState } from 'react';
 import { Bar } from 'react-chartjs-2';
 import { getDatesInRange } from '../utils/dateFormat';
-import EnvironmentsDropdown from './EnvironmentsDropdown';
 
-export default function DeploymentFrequencyChart({ deployments, startDate, endDate }: any) {
+// TODO: add environment as props
+// TODO: update deployment mapper not to map via env name
+export default function DeploymentFrequencyChart({
+  deployments,
+  startDate,
+  endDate,
+  environment
+}: any) {
   const [chartData, setChartData] = useState([]);
-  const [environment, setEnvironment] = useState('');
 
   ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
@@ -44,13 +49,6 @@ export default function DeploymentFrequencyChart({ deployments, startDate, endDa
   };
 
   useEffect(() => {
-    setEnvironment(
-      Object.keys(deployments).filter((i) => ['production', 'prod'].includes(i.toLowerCase()))[0] ||
-        Object.keys(deployments)[0]
-    );
-  }, [deployments]);
-
-  useEffect(() => {
     const datasets: any = [];
 
     Object.entries(deployments).forEach(([key, value]: any) => {
@@ -74,22 +72,13 @@ export default function DeploymentFrequencyChart({ deployments, startDate, endDa
     });
 
     if (environment) {
-      setChartData(datasets.filter((d: any) => d.label === environment));
+      setChartData(datasets.filter((d: any) => d.label === environment.name));
     }
   }, [deployments, environment]);
 
   return (
-    <>
-      <div className='float-right'>
-        <EnvironmentsDropdown
-          environmentList={Object.keys(deployments)}
-          environment={environment}
-          setEnvironment={setEnvironment}
-        />
-      </div>
-      <div className='w-full overflow-hidden'>
-        <Bar options={options} data={data} />
-      </div>
-    </>
+    <div className='w-full overflow-hidden'>
+      <Bar options={options} data={data} />
+    </div>
   );
 }
