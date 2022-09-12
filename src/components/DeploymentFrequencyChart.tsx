@@ -18,7 +18,8 @@ export default function DeploymentFrequencyChart({
   endDate,
   environment
 }: any) {
-  const [chartData, setChartData] = useState([]);
+  const [datasets, setDatasets] = useState<any[]>([]);
+  const [labels, setLabels] = useState<any[]>([]);
 
   ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
@@ -41,15 +42,20 @@ export default function DeploymentFrequencyChart({
   };
 
   // Dates Ranges
-  const labels = getDatesInRange(startDate, endDate);
+
+  useEffect(() => {
+    const dateRanges = getDatesInRange(startDate, endDate);
+
+    setLabels(dateRanges);
+  }, [startDate, endDate])
+
+
   const data: { labels: any; datasets: any } = {
     labels,
-    datasets: chartData
+    datasets: datasets.filter((d: any) => d.label === environment.name)
   };
 
   useEffect(() => {
-    const datasets: any = [];
-
     Object.entries(deployments).forEach(([key, value]: any) => {
       const deploymentsDict: any = {};
 
@@ -63,17 +69,14 @@ export default function DeploymentFrequencyChart({
         }
       });
 
-      datasets.push({
+      setDatasets((datasets) => [...datasets, {
         label: key,
         backgroundColor: '#0052cc',
         data: labels.map((label) => deploymentsDict[label] || 0)
-      });
-    });
+      }])
 
-    if (environment) {
-      setChartData(datasets.filter((d: any) => d.label === environment.name));
-    }
-  }, [deployments, environment]);
+    });
+  }, [deployments]);
 
   return (
     <div className='w-full overflow-hidden'>

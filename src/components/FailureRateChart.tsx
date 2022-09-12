@@ -12,7 +12,8 @@ import { Bar } from 'react-chartjs-2';
 import { getDatesInRange } from '../utils/dateFormat';
 
 export default function FailureRateChart({ deployments, startDate, endDate, environment }: any) {
-  const [chartData, setChartData] = useState([]);
+  const [datasets, setDatasets] = useState<any[]>([]);
+  const [labels, setLabels] = useState<any[]>([]);
 
   ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
@@ -35,15 +36,20 @@ export default function FailureRateChart({ deployments, startDate, endDate, envi
   };
 
   // Dates Ranges
-  const labels = getDatesInRange(startDate, endDate);
+
+  useEffect(() => {
+    const dateRanges = getDatesInRange(startDate, endDate);
+
+    setLabels(dateRanges);
+  }, [startDate, endDate])
+
+
   const data: { labels: any; datasets: any } = {
     labels,
-    datasets: chartData
+    datasets: datasets.filter((d: any) => d.label === environment.name)
   };
 
   useEffect(() => {
-    const datasets: any = [];
-
     Object.entries(deployments).forEach(([key, value]: any) => {
       const deploymentsDict: any = {};
 
@@ -57,21 +63,18 @@ export default function FailureRateChart({ deployments, startDate, endDate, envi
         }
       });
 
-      datasets.push({
+      setDatasets((datasets) => [...datasets, {
         label: key,
         backgroundColor: '#EF4444',
         data: labels.map((label) => deploymentsDict[label] || 0)
-      });
-    });
+      }])
 
-    if (environment) {
-      setChartData(datasets.filter((d: any) => d.label === environment.name));
-    }
-  }, [deployments, environment]);
+    });
+  }, [deployments]);
 
   return (
     <div className='w-full overflow-hidden'>
-      <Bar options={options} data={data} height={80} />
+      <Bar options={options} data={data} />
     </div>
   );
 }
