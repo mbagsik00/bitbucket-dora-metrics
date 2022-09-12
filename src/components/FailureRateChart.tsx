@@ -14,6 +14,7 @@ import { getDatesInRange } from '../utils/dateFormat';
 export default function FailureRateChart({ deployments, startDate, endDate, environment }: any) {
   const [datasets, setDatasets] = useState<any[]>([]);
   const [labels, setLabels] = useState<any[]>([]);
+  const [filteredDatasets, setFilteredDatasets] = useState<any[]>([]);
 
   ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
@@ -36,18 +37,11 @@ export default function FailureRateChart({ deployments, startDate, endDate, envi
   };
 
   // Dates Ranges
-
   useEffect(() => {
     const dateRanges = getDatesInRange(startDate, endDate);
 
     setLabels(dateRanges);
-  }, [startDate, endDate])
-
-
-  const data: { labels: any; datasets: any } = {
-    labels,
-    datasets: datasets.filter((d: any) => d.label === environment.name)
-  };
+  }, [startDate, endDate]);
 
   useEffect(() => {
     Object.entries(deployments).forEach(([key, value]: any) => {
@@ -63,18 +57,36 @@ export default function FailureRateChart({ deployments, startDate, endDate, envi
         }
       });
 
-      setDatasets((datasets) => [...datasets, {
-        label: key,
-        backgroundColor: '#EF4444',
-        data: labels.map((label) => deploymentsDict[label] || 0)
-      }])
-
+      setDatasets((datasets) => [
+        ...datasets,
+        {
+          label: key,
+          backgroundColor: '#EF4444',
+          data: labels.map((label) => deploymentsDict[label] || 0)
+        }
+      ]);
     });
   }, [deployments]);
 
+  useEffect(() => {
+    const envData = datasets.filter((d: any) => d.label === environment.name);
+
+    setFilteredDatasets(
+      envData.length > 0
+        ? envData
+        : [{ label: environment.name, backgroundColor: '#EF4444', data: [] }]
+    );
+  }, [environment, datasets]);
+
   return (
     <div className='w-full overflow-hidden'>
-      <Bar options={options} data={data} />
+      <Bar
+        options={options}
+        data={{
+          labels,
+          datasets: filteredDatasets
+        }}
+      />
     </div>
   );
 }

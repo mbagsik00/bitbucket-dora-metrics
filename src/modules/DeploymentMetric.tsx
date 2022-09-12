@@ -68,6 +68,7 @@ export default function DeploymentMetric({ workspaceSlug, repositorySlug, enviro
 
           <div className='my-2 px-2 w-1/2 overflow-hidden lg:w-1/2 xl:w-1/2'>
             <FailureRateChart
+              environment={environment}
               deployments={failedDeployments}
               startDate={startDate}
               endDate={endDate}

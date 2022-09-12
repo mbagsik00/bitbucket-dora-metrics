@@ -20,6 +20,7 @@ export default function DeploymentFrequencyChart({
 }: any) {
   const [datasets, setDatasets] = useState<any[]>([]);
   const [labels, setLabels] = useState<any[]>([]);
+  const [filteredDatasets, setFilteredDatasets] = useState<any[]>([]);
 
   ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
@@ -42,18 +43,11 @@ export default function DeploymentFrequencyChart({
   };
 
   // Dates Ranges
-
   useEffect(() => {
     const dateRanges = getDatesInRange(startDate, endDate);
 
     setLabels(dateRanges);
-  }, [startDate, endDate])
-
-
-  const data: { labels: any; datasets: any } = {
-    labels,
-    datasets: datasets.filter((d: any) => d.label === environment.name)
-  };
+  }, [startDate, endDate]);
 
   useEffect(() => {
     Object.entries(deployments).forEach(([key, value]: any) => {
@@ -69,18 +63,36 @@ export default function DeploymentFrequencyChart({
         }
       });
 
-      setDatasets((datasets) => [...datasets, {
-        label: key,
-        backgroundColor: '#0052cc',
-        data: labels.map((label) => deploymentsDict[label] || 0)
-      }])
-
+      setDatasets((datasets) => [
+        ...datasets,
+        {
+          label: key,
+          backgroundColor: '#0052cc',
+          data: labels.map((label) => deploymentsDict[label] || 0)
+        }
+      ]);
     });
   }, [deployments]);
 
+  useEffect(() => {
+    const envData = datasets.filter((d: any) => d.label === environment.name);
+
+    setFilteredDatasets(
+      envData.length > 0
+        ? envData
+        : [{ label: environment.name, backgroundColor: '#0052cc', data: [] }]
+    );
+  }, [environment, datasets]);
+
   return (
     <div className='w-full overflow-hidden'>
-      <Bar options={options} data={data} />
+      <Bar
+        options={options}
+        data={{
+          labels,
+          datasets: filteredDatasets
+        }}
+      />
     </div>
   );
 }
