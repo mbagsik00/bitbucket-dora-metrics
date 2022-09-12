@@ -15,15 +15,15 @@ export default function Table({ header, data, loading }: IProps) {
     <>
       <div className='overflow-x-auto'>
         <div className='w-full inline-block align-middle'>
-          <div className='overflow-x-auto border rounded-lg'>
+          <div className='overflow-x-auto border rounded-sm'>
             <table className='min-w-full divide-y divide-gray-200'>
-              <thead className='bg-gray-50'>
+              <thead className='bg-gray-800'>
                 <tr>
                   {header.map((value) => (
                     <th
                       key={value}
                       scope='col'
-                      className='px-6 py-3 text-xs font-bold text-left text-black uppercase '
+                      className='px-6 py-3 text-xs font-bold text-left text-white uppercase'
                     >
                       {value}
                     </th>
@@ -35,9 +35,7 @@ export default function Table({ header, data, loading }: IProps) {
                 {data.length === 0 && (
                   <tr>
                     <td className='text-center p-4' colSpan={header.length}>
-                      <h2 className='text-lg text-blue-500 font-semibold'>
-                        No records found.
-                      </h2>
+                      <h2 className='text-lg text-blue-500 font-semibold'>No records found.</h2>
                     </td>
                   </tr>
                 )}

@@ -19,7 +19,7 @@ export default function PullRequestTable({ pullRequests, loading }: IProps) {
     'created',
     'comment',
     'approval',
-    'merged',
+    'merged'
   ];
 
   return (
@@ -32,10 +32,7 @@ export default function PullRequestTable({ pullRequests, loading }: IProps) {
         comment: convertToHour12(pr.comment),
         approval: convertToHour12(pr.approval),
         merged: convertToHour12(pr.merged),
-        title:
-          pr.title.length > 40
-            ? `${pr.title.substring(0, 40).trim()}...`
-            : pr.title,
+        title: pr.title.length > 40 ? `${pr.title.substring(0, 40).trim()}...` : pr.title,
         state: (
           <div className='flex pr-4'>
             {pr.state === PullRequestState.OPEN ? (
@@ -51,7 +48,7 @@ export default function PullRequestTable({ pullRequests, loading }: IProps) {
             )}
           </div>
         ),
-        leadTime: <PullRequestLeadTimeCard pullRequest={pr} />,
+        leadTime: <PullRequestLeadTimeCard pullRequest={pr} />
       }))}
     />
   );
