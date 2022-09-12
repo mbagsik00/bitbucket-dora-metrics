@@ -11,7 +11,6 @@ import { useEffect, useState } from 'react';
 import { Bar } from 'react-chartjs-2';
 import { getDatesInRange } from '../utils/dateFormat';
 
-// TODO: add environment as props
 // TODO: update deployment mapper not to map via env name
 export default function DeploymentFrequencyChart({
   deployments,
