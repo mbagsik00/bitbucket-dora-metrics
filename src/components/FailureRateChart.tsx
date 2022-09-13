@@ -69,7 +69,9 @@ export default function FailureRateChart({ deployments, startDate, endDate, envi
   }, [deployments]);
 
   useEffect(() => {
-    const envData = datasets.filter((d: any) => d.label === environment.name);
+    const envData = datasets
+      .filter((d: any) => d.label === environment.uuid)
+      .map((d: any) => ({ ...d, label: environment.name }));
 
     setFilteredDatasets(
       envData.length > 0

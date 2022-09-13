@@ -32,8 +32,8 @@ export const deploymentMapper = ({ deployments, environments }: any): any => {
   let successfulDeploymentDict: Record<string, IDeployment[]> = {};
   let failedDeploymentDict: Record<string, IDeployment[]> = {};
 
-  const environmentMap = new Map<string, string>();
-  environments.forEach((env: any) => environmentMap.set(env.uuid, env.name));
+  // const environmentMap = new Map<string, string>();
+  // environments.forEach((env: any) => environmentMap.set(env.uuid, env.name));
 
   deployments
     // Filter only within the last 2 weeks
@@ -46,7 +46,7 @@ export const deploymentMapper = ({ deployments, environments }: any): any => {
     // group by environment uuid
     .forEach((deployment: any) => {
       const deploymentStatus = deployment.state.status.name;
-      const deploymentEnv = environmentMap.get(deployment.environment.uuid);
+      const deploymentEnv = deployment.environment.uuid; // environmentMap.get(deployment.environment.uuid);
 
       if (deploymentEnv && deploymentStatus === DeploymentStatus.SUCCESSFUL) {
         successfulDeploymentDict = updateDeploymentsDict(

@@ -11,7 +11,7 @@ import { useEffect, useState } from 'react';
 import { Bar } from 'react-chartjs-2';
 import { getDatesInRange } from '../utils/dateFormat';
 
-// TODO: update deployment mapper not to map via env name
+// TODO: update to only accept specific environment data
 export default function DeploymentFrequencyChart({
   deployments,
   startDate,
@@ -75,7 +75,9 @@ export default function DeploymentFrequencyChart({
   }, [deployments]);
 
   useEffect(() => {
-    const envData = datasets.filter((d: any) => d.label === environment.name);
+    const envData = datasets
+      .filter((d: any) => d.label === environment.uuid)
+      .map((d: any) => ({ ...d, label: environment.name }));
 
     setFilteredDatasets(
       envData.length > 0
