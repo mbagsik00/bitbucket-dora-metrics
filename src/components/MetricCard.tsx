@@ -11,8 +11,12 @@ export default function MetricCard({ color, icon, name, value }: IProps) {
   return (
     <div className='bg-gray-800 rounded-sm shadow p-2'>
       <div className='flex flex-row items-center'>
-        <div className='flex-shrink pr-4'>
-          <div className={`rounded-full p-3 ml-3 ${color}`}>{icon}</div>
+        <div className='flex-shrink pl-4'>
+          <div
+            className={`flex z-10 justify-center items-center w-10 h-10 rounded-full ring-0 ring-white shrink-0 ${color}`}
+          >
+            {icon}
+          </div>
         </div>
         <div className='flex-1 text-right md:text-center'>
           <h5 className='font-bold uppercase text-white'>{name}</h5>

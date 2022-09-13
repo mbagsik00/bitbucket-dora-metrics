@@ -12,15 +12,12 @@ interface IProps {
   repositorySlug: string;
 }
 
-export default function PullRequestMetric({
-  workspaceSlug,
-  repositorySlug,
-}: IProps) {
+export default function PullRequestMetric({ workspaceSlug, repositorySlug }: IProps) {
   const [metrics, setMetrics] = useState<IPullRequestMetrics>();
 
   const { status, data, error } = usePullRequestMetrics({
     workspaceSlug,
-    repositorySlug,
+    repositorySlug
   });
 
   useEffect(() => {
@@ -28,9 +25,7 @@ export default function PullRequestMetric({
   }, [data]);
 
   if (status === 'error') {
-    return (
-      <ErrorToastr message={error instanceof Error ? error.message : ''} />
-    );
+    return <ErrorToastr message={error instanceof Error ? error.message : ''} />;
   }
 
   return (
@@ -57,7 +52,7 @@ export default function PullRequestMetric({
               icon={<GoArchive className='h-5' color='white' />}
               name='Abandoned Pull Requests'
               value={metrics ? metrics.declined : '-'}
-            />,
+            />
           ]}
         />
       )}
