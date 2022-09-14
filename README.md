@@ -13,6 +13,14 @@ DORA metrics are metrics to measure the performance of a software development te
 
 ![Dashboard](public/assets/dashboard.png)
 
+# How it works
+
+TBD
+
+# Limitations
+
+TBD
+
 # Authorization
 
 The authorization for the application is using Bitbucket app password. Click [here](https://support.atlassian.com/bitbucket-cloud/docs/app-passwords/) and follow the instructions on how to generate app password on your bitbucket account.
@@ -54,6 +62,9 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 - Date filter
 - Data comparison between dates
 - Metrics average
-- Lead time for changes (First commit / first PR -> Production)
+- Average Lead time for changes (First commit / first PR -> Production)
 - Time to restore service
 - Change failure rate
+- Integration to different platform
+  - Github
+  - Azure Devops
