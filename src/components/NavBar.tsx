@@ -1,6 +1,7 @@
 import { Fragment } from 'react';
 import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { FaBars, FaTimes, FaUserAlt } from 'react-icons/fa';
+import { IoLogoBitbucket } from 'react-icons/io';
 import { Link, useNavigate } from 'react-router-dom';
 
 const navigation = [
@@ -8,7 +9,7 @@ const navigation = [
   { name: 'Resources', href: '/resources', current: false },
   { name: 'Applications', href: '/applications', current: false },
   { name: 'Environment Links', href: '/environments', current: false },
-  { name: 'References', href: '/references', current: false },
+  { name: 'References', href: '/references', current: false }
 ];
 
 function classNames(...classes: any) {
@@ -31,11 +32,7 @@ export default function NavBar() {
             <div className='flex items-center justify-between h-16'>
               <div className='flex items-center'>
                 <div className='bg-gray-800 flex-shrink-0'>
-                  <img
-                    src='/assets/logo.svg'
-                    className='h-8 w-8'
-                    alt='Medenterprises'
-                  />
+                  <IoLogoBitbucket className='h-8 w-8 text-blue-500' />
                 </div>
 
                 <div className='hidden md:block'>

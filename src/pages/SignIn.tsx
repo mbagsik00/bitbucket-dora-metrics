@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { FaLock } from 'react-icons/fa';
+import { IoLogoBitbucket } from 'react-icons/io';
 import { useNavigate } from 'react-router-dom';
 import { getUser, storeAuthenticatedUser, useLoginUser } from '../apis/user';
 
@@ -40,9 +41,7 @@ export default function SignIn() {
   useEffect(() => {
     if (error) {
       setErrorMessage(
-        error instanceof Error
-          ? error.message
-          : 'Error encountered while logging in.'
+        error instanceof Error ? error.message : 'Error encountered while logging in.'
       );
     }
   }, [error, navigate]);
@@ -51,14 +50,13 @@ export default function SignIn() {
     <div className='flex items-center justify-center h-screen'>
       <div className='max-w-md w-full space-y-8'>
         <div>
-          <img
-            className='mx-auto h-auto w-auto pb-10'
-            src='/assets/medrecruit_logo.webp'
-            alt='Medenterprises'
-          />
+          <IoLogoBitbucket className='mx-auto h-auto w-auto text-blue-500' size={80} />
 
-          <h2 className='mt-6 text-center text-3xl tracking-tight font-bold text-blue-400'>
-            Sign in to your account
+          <h2 className='mt-6 text-center text-7xl tracking-tight font-bold text-blue-500'>
+            Sign in
+          </h2>
+          <h2 className='mt-6 text-center text-md tracking-tight font-bold text-blue-500'>
+            Sign in using your Bitbucket App Password credentials
           </h2>
         </div>
 
