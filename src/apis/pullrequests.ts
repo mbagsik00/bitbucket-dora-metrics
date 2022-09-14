@@ -16,7 +16,7 @@ const getPullRequests = async ({
   workspaceSlug,
   repositorySlug,
   state,
-  page,
+  page
 }: IPullRequestsData) => {
   const headers = getUserAuthorizationHeader();
   let pullRequestURL = `${BASE_URL}/repositories/${workspaceSlug}/${repositorySlug}/pullrequests?sort=-created_on&page=${page}`;
@@ -29,7 +29,7 @@ const getPullRequests = async ({
   }
 
   const { data } = await axios.get(pullRequestURL, {
-    headers,
+    headers
   });
 
   return data.values;
@@ -48,7 +48,7 @@ interface IPullRequestActivityData {
 const getPullRequestActivity = async ({
   params,
   values,
-  nextUrl,
+  nextUrl
 }: IPullRequestActivityData): Promise<any> => {
   const headers = getUserAuthorizationHeader();
   const { workspaceSlug, repositorySlug, pullrequestId } = params;
@@ -57,7 +57,7 @@ const getPullRequestActivity = async ({
     nextUrl ||
       `${BASE_URL}/repositories/${workspaceSlug}/${repositorySlug}/pullrequests/${pullrequestId}/activity?pagelen=20`,
     {
-      headers,
+      headers
     }
   );
 
@@ -67,7 +67,7 @@ const getPullRequestActivity = async ({
     return getPullRequestActivity({
       params,
       values,
-      nextUrl: data.next,
+      nextUrl: data.next
     });
   } else {
     return values;
@@ -92,9 +92,9 @@ export const usePullRequests = (params: IPullRequestsData) => {
             params: {
               workspaceSlug,
               repositorySlug,
-              pullrequestId: pr.id,
+              pullrequestId: pr.id
             },
-            values: activityList,
+            values: activityList
           });
 
           return {
@@ -102,15 +102,14 @@ export const usePullRequests = (params: IPullRequestsData) => {
             title: pr.title,
             created_on: pr.created_on,
             state: pr.state,
-            activities: activityList,
+            author: pr.author.display_name,
+            activities: activityList
           };
         })
       );
 
       // Get activity metrics
-      const mappedPullRequestsWithMetrics = activities.map(
-        pullRequestWithActivityMapper
-      );
+      const mappedPullRequestsWithMetrics = activities.map(pullRequestWithActivityMapper);
 
       return mappedPullRequestsWithMetrics;
     },

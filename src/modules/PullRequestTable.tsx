@@ -1,4 +1,4 @@
-import Table from '../components/Table';
+// import Table from '../components/Table';
 import { IPullRequestWithActivity } from '../types';
 import { PullRequestState } from '../types/pullrequest';
 import { GoGitPullRequest, GoGitMerge } from 'react-icons/go';
@@ -11,14 +11,17 @@ interface IProps {
 }
 
 export default function PullRequestTable({ pullRequests, loading }: IProps) {
-  const tableHeader = ['id', 'title', 'state', 'leadTime'];
+  // const tableHeader = ['id', 'title', 'state', 'leadTime'];
 
   return (
     <>
       {pullRequests.map((pr) => (
         <PullRequestCard
+          key={pr.id}
+          loading={loading}
           id={pr.id}
           title={pr.title}
+          author={pr.author}
           leadTime={<Timeline pullRequest={pr} />}
           state={
             <>

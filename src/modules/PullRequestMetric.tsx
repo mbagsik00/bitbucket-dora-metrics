@@ -4,7 +4,6 @@ import { usePullRequestMetrics } from '../apis/pullrequestMetrics';
 import ErrorToastr from '../components/ErrorToastr';
 import LoadingSpinner from '../components/LoadingSpinner';
 import MetricCard from '../components/MetricCard';
-import PullRequestCard from '../components/PullRequestCard';
 import { IPullRequestMetrics } from '../types';
 import MetricContainer from './MetricContainer';
 

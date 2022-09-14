@@ -21,6 +21,7 @@ export interface IPullRequest {
   title: string;
   created: string;
   state: PullRequestState;
+  author: string;
 }
 
 export interface IPullRequestMetrics {
@@ -37,5 +38,5 @@ export interface IPullRequestWithActivity extends IPullRequest {
 
 export enum DeploymentStatus {
   SUCCESSFUL = 'SUCCESSFUL',
-  FAILED = 'FAILED',
+  FAILED = 'FAILED'
 }

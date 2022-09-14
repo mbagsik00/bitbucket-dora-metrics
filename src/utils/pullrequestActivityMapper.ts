@@ -8,10 +8,11 @@ export const pullRequestWithActivityMapper = (
     title: pullrequest.title,
     created: pullrequest.created_on,
     state: pullrequest.state,
+    author: pullrequest.author,
     // Data below are coming from the PR activity
     comment: '',
     approval: '',
-    merged: '',
+    merged: ''
   };
 
   const updates: Record<string, any>[] = [];
@@ -34,8 +35,7 @@ export const pullRequestWithActivityMapper = (
 
   const firstComment = comments[comments.length - 1]?.comment.created_on;
   const firstApproval = approvals[approvals.length - 1]?.approval.date;
-  const merged = updates.find((pr) => pr.update.state === 'MERGED')?.update
-    .date;
+  const merged = updates.find((pr) => pr.update.state === 'MERGED')?.update.date;
 
   record.comment = firstComment;
   // ? new Date(firstComment).toLocaleString('en-NZ', { hour12: true })

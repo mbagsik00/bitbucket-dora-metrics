@@ -13,13 +13,8 @@ interface IProps {
   repositorySlug: string;
 }
 
-export default function PullRequestContainer({
-  workspaceSlug,
-  repositorySlug,
-}: IProps) {
-  const [pullRequests, setPullRequests] = useState<IPullRequestWithActivity[]>(
-    []
-  );
+export default function PullRequestContainer({ workspaceSlug, repositorySlug }: IProps) {
+  const [pullRequests, setPullRequests] = useState<IPullRequestWithActivity[]>([]);
   const [pageNumber, setPageNumber] = useState(1);
   const [loading, setLoading] = useState(true);
 
@@ -27,7 +22,7 @@ export default function PullRequestContainer({
     workspaceSlug,
     repositorySlug,
     state: [PullRequestState.OPEN, PullRequestState.MERGED],
-    page: pageNumber,
+    page: pageNumber
   });
 
   useEffect(() => {
@@ -35,11 +30,12 @@ export default function PullRequestContainer({
       ? data.map((pr: any) => ({
           id: pr.id,
           title: pr.title,
+          author: pr.author,
           created: pr.created,
           state: pr.state,
           comment: pr.comment,
           approval: pr.approval,
-          merged: pr.merged,
+          merged: pr.merged
         }))
       : [];
 
@@ -62,19 +58,14 @@ export default function PullRequestContainer({
   };
 
   if (status === 'error') {
-    return (
-      <ErrorToastr message={error instanceof Error ? error.message : ''} />
-    );
+    return <ErrorToastr message={error instanceof Error ? error.message : ''} />;
   }
 
   return status === 'loading' ? (
     <LoadingSpinner />
   ) : (
     <>
-      <PullRequestMetric
-        workspaceSlug={workspaceSlug!}
-        repositorySlug={repositorySlug!}
-      />
+      <PullRequestMetric workspaceSlug={workspaceSlug!} repositorySlug={repositorySlug!} />
 
       <PullRequestTable pullRequests={pullRequests} loading={loading} />
       <PaginationButton
