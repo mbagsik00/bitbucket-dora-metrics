@@ -67,7 +67,7 @@ export default function DeploymentFrequencyChart({
         ...datasets,
         {
           label: key,
-          backgroundColor: '#0052cc',
+          backgroundColor: '#3c82f6',
           data: labels.map((label) => deploymentsDict[label] || 0)
         }
       ]);
@@ -82,7 +82,7 @@ export default function DeploymentFrequencyChart({
     setFilteredDatasets(
       envData.length > 0
         ? envData
-        : [{ label: environment.name, backgroundColor: '#0052cc', data: [] }]
+        : [{ label: environment.name, backgroundColor: '#3c82f6', data: [] }]
     );
   }, [environment, datasets]);
 
