@@ -40,7 +40,7 @@ function PullRequestSkeletonCard() {
 
 export default function PullRequestCard({ id, title, author, state, leadTime, loading }: IProps) {
   return (
-    <div className='p-4 w-full bg-white rounded-sm border border-gray-200'>
+    <div className='p-4 w-full bg-white rounded-sm border border-gray-100'>
       {loading ? (
         <PullRequestSkeletonCard />
       ) : (

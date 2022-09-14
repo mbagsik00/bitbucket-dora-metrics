@@ -1,9 +1,30 @@
 # Introduction
 
-<!-- More details about what is DORA metrics and some screenshots of the application -->
-<!-- Details on how to generate App Password from bitbucket since this is what used for credentials -->
+Bitbucket DORA metrics is web application built using React. It provides a dashboard to show how the team is performing based on deployments and pull requests from Bitbucket.
 
-DORA metrics for bitbucket.
+DORA metrics are metrics to measure the performance of a software development team. These are the four DORA key metrics:
+
+- Deployment Frequency
+- Lead Time for Changes
+- Change Failure Rate
+- Time to Restore Service
+
+# Dashboard
+
+![Dashboard](public/assets/dashboard.png)
+
+# Authorization
+
+The authorization for the application is using Bitbucket app password. Click [here](https://support.atlassian.com/bitbucket-cloud/docs/app-passwords/) and follow the instructions on how to generate app password on your bitbucket account.
+
+Make sure the app password have `Read` permission for the following:
+
+- Accounts
+- Workspaces
+- Pull Requests
+- Projects
+- Repositories
+- Pipelines
 
 # How to run the application
 
@@ -30,8 +51,9 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 
 # Future
 
-- Environment Separation
 - Date filter
-  - Pull Request Metrics
-  - List of Pull Requests
-  - Deployment Metrics
+- Data comparison between dates
+- Metrics average
+- Lead time for changes (First commit / first PR -> Production)
+- Time to restore service
+- Change failure rate
