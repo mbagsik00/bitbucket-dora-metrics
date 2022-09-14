@@ -5,7 +5,8 @@ interface IProps {
 }
 
 export default function MetricContainer({ metricCards }: IProps) {
-  const containerClassName = `py-3 w-full overflow-hidden lg:my-2 lg:px-2 lg:w-1/${metricCards.length.toString()} xl:w-1/${metricCards.length.toString()}`;
+  const cardsLength = metricCards.length.toString();
+  const containerClassName = `py-3 w-full overflow-hidden lg:my-2 lg:px-2 lg:w-1/${cardsLength} xl:w-1/${cardsLength}`;
 
   return (
     <div className='flex -mx-2 overflow-hidden'>

@@ -29,14 +29,12 @@ export default function SignIn() {
     if (user) {
       navigate('/');
     }
-  }, [user, navigate]);
 
-  useEffect(() => {
     if (data) {
       storeAuthenticatedUser(data);
       navigate('/');
     }
-  }, [data, navigate]);
+  }, [user, data, navigate]);
 
   useEffect(() => {
     if (error) {
@@ -44,7 +42,7 @@ export default function SignIn() {
         error instanceof Error ? error.message : 'Error encountered while logging in.'
       );
     }
-  }, [error, navigate]);
+  }, [error]);
 
   return (
     <div className='flex items-center justify-center h-screen'>

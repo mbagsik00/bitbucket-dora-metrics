@@ -16,7 +16,7 @@ export default function Dashboard() {
     { name: string; uuid: string } | undefined
   >(undefined);
 
-  const { data, status, error } = useEnvironments({
+  const { data } = useEnvironments({
     workspaceSlug: workspaceSlug!,
     repositorySlug: repositorySlug!
   });

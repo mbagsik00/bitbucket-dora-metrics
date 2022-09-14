@@ -66,7 +66,6 @@ export default function PullRequestContainer({ workspaceSlug, repositorySlug }: 
   ) : (
     <>
       <PullRequestMetric workspaceSlug={workspaceSlug!} repositorySlug={repositorySlug!} />
-
       <PullRequestTable pullRequests={pullRequests} loading={loading} />
       <PaginationButton
         onNext={nextPageOnClickHandler}

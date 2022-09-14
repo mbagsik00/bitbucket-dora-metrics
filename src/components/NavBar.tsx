@@ -2,19 +2,19 @@ import { Fragment } from 'react';
 import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { FaBars, FaTimes, FaUserAlt } from 'react-icons/fa';
 import { IoLogoBitbucket } from 'react-icons/io';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom'; // Link
 
-const navigation = [
-  { name: 'Workspaces', href: '/', current: true },
-  { name: 'Resources', href: '/resources', current: false },
-  { name: 'Applications', href: '/applications', current: false },
-  { name: 'Environment Links', href: '/environments', current: false },
-  { name: 'References', href: '/references', current: false }
-];
+// const navigation = [
+//   { name: 'Workspaces', href: '/', current: true },
+//   { name: 'Resources', href: '/resources', current: false },
+//   { name: 'Applications', href: '/applications', current: false },
+//   { name: 'Environment Links', href: '/environments', current: false },
+//   { name: 'References', href: '/references', current: false }
+// ];
 
-function classNames(...classes: any) {
-  return classes.filter(Boolean).join(' ');
-}
+// function classNames(...classes: any) {
+//   return classes.filter(Boolean).join(' ');
+// }
 
 export default function NavBar() {
   const navigate = useNavigate();
@@ -31,13 +31,20 @@ export default function NavBar() {
           <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
             <div className='flex items-center justify-between h-16'>
               <div className='flex items-center'>
-                <div className='bg-gray-800 flex-shrink-0'>
+                <div className='bg-gray-800 flex items-baseline'>
                   <IoLogoBitbucket className='h-8 w-8 text-blue-500' />
                 </div>
 
+                {/* Remove this if we're adding a nav button */}
+                <div className='ml-5 flex items-baseline space-x-4'>
+                  <span className='text-xl tracking-tight font-bold text-gray-200'>
+                    Bitbucket DORA Metrics
+                  </span>
+                </div>
+
                 <div className='hidden md:block'>
-                  <div className='ml-10 flex items-baseline space-x-4'>
-                    {navigation.map((item) => (
+                  <div className='ml-5 flex items-baseline space-x-4'>
+                    {/* {navigation.map((item) => (
                       <Link
                         to={item.href}
                         key={item.name}
@@ -51,7 +58,7 @@ export default function NavBar() {
                       >
                         {item.name}
                       </Link>
-                    ))}
+                    ))} */}
                   </div>
                 </div>
               </div>
@@ -62,7 +69,7 @@ export default function NavBar() {
                     <div>
                       <Menu.Button className='bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white'>
                         <span className='sr-only'>Open user menu</span>
-                        <FaUserAlt className='h-6 w-6' aria-hidden='true' />
+                        <FaUserAlt className='h-6 w-6 text-gray-200' aria-hidden='true' />
                       </Menu.Button>
                     </div>
                     <Transition
@@ -104,7 +111,7 @@ export default function NavBar() {
 
           <Disclosure.Panel className='md:hidden'>
             <div className='px-2 pt-2 pb-3 space-y-1 sm:px-3'>
-              {navigation.map((item) => (
+              {/* {navigation.map((item) => (
                 <Disclosure.Button
                   key={item.name}
                   as='a'
@@ -119,7 +126,7 @@ export default function NavBar() {
                 >
                   {item.name}
                 </Disclosure.Button>
-              ))}
+              ))} */}
             </div>
             <div className='pt-4 pb-3 border-t border-gray-700'>
               <div className='px-2 space-y-1'>

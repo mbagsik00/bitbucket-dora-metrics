@@ -4,8 +4,7 @@ import { getUser } from './user';
 import { queryStringBuilder, IBaseQueryWithAuthorization } from './utils/query';
 import { getEnvironmentsUrl } from './routes';
 
-interface IGetEnvironmentsByRepositoryQuery
-  extends IBaseQueryWithAuthorization {
+interface IGetEnvironmentsByRepositoryQuery extends IBaseQueryWithAuthorization {
   workspaceSlug: string;
   repositorySlug: string;
 }
@@ -14,7 +13,7 @@ const getEnvironmentsByRepository = ({
   workspaceSlug,
   repositorySlug,
   limit,
-  authorization,
+  authorization
 }: IGetEnvironmentsByRepositoryQuery) => {
   let url = getEnvironmentsUrl(workspaceSlug, repositorySlug);
 
@@ -22,8 +21,8 @@ const getEnvironmentsByRepository = ({
 
   return axios.get(url, {
     headers: {
-      authorization,
-    },
+      authorization
+    }
   });
 };
 
@@ -32,10 +31,7 @@ interface IEnvironmentsData {
   repositorySlug: string;
 }
 
-export const useEnvironments = ({
-  workspaceSlug,
-  repositorySlug,
-}: IEnvironmentsData) => {
+export const useEnvironments = ({ workspaceSlug, repositorySlug }: IEnvironmentsData) => {
   return useQuery(
     ['environments', workspaceSlug, repositorySlug],
     async () => {
@@ -49,7 +45,7 @@ export const useEnvironments = ({
         workspaceSlug,
         repositorySlug,
         limit: 20,
-        authorization: user.auth,
+        authorization: user.auth
       });
 
       return data;

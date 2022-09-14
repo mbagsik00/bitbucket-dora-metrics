@@ -7,8 +7,8 @@ import { IBaseQueryWithAuthorization } from './utils/query';
 const loginUser = ({ authorization }: IBaseQueryWithAuthorization) =>
   axios.get(getUserUrl(), {
     headers: {
-      authorization,
-    },
+      authorization
+    }
   });
 
 interface IUserLogin {
@@ -28,13 +28,13 @@ export const useLoginUser = ({ username, password }: IUserLogin) => {
 
         return {
           username: data.username,
-          auth: encodedCreds,
+          auth: encodedCreds
         };
       } catch (err) {
         throw err;
       }
     },
-    { enabled: false }
+    { enabled: false, retry: false }
   );
 };
 
@@ -48,7 +48,7 @@ export const storeAuthenticatedUser = (data: User) => {
     'user_details',
     JSON.stringify({
       username: data.username,
-      auth: data.auth,
+      auth: data.auth
     })
   );
 };
@@ -67,6 +67,6 @@ export const getUserAuthorizationHeader = () => {
   const user = getUser();
 
   return {
-    Authorization: user ? user.auth : '',
+    Authorization: user ? user.auth : ''
   };
 };
