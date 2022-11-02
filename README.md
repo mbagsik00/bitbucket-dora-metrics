@@ -15,11 +15,17 @@ DORA metrics are metrics to measure the performance of a software development te
 
 # How it works
 
-TBD
+The Bitbucket DORA metrics app is just a front-end that make use of the [Bitbucket Cloud REST API](https://developer.atlassian.com/cloud/bitbucket/rest/intro/#authentication) to fetch the data and visualize them based on the DORA metrics.
+It uses the following frameworks:
+
+- React
+- React-Query
+- Tailwind CSS
+- Chart.js
 
 # Limitations
 
-TBD
+- It is hardcoded to only fetch 2 weeks of data.
 
 # Authorization
 

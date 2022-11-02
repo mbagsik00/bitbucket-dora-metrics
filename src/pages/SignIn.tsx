@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { getUser, storeAuthenticatedUser, useLoginUser } from '../apis/user';
 
 export default function SignIn() {
+  // TODO: Make use of form here and useRef
   const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
