@@ -59,6 +59,7 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 
 # Future
 
+- Number of failed builds
 - Date filter
 - Data comparison between dates
 - Metrics average
